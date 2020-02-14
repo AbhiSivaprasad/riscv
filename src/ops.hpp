@@ -1,6 +1,7 @@
-#include "cpustate.hpp"
 #ifndef __OPS_HPP__
 #define __OPS_HPP__
+
+#include "cpustate.hpp"
 
 // RV32I
 
