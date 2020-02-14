@@ -47,7 +47,7 @@ void rv32i_sra(RInstruction &instruction, CPUState &state);
 void rv32i_or(RInstruction &instruction, CPUState &state);
 void rv32i_and(RInstruction &instruction, CPUState &state);
 void rv32i_fence(IInstruction &instruction, CPUState &state);
-void rv32i_fence_i(IInstruction &instruction, CPUState &state);
+void rv32i_fencei(IInstruction &instruction, CPUState &state);
 void rv32i_ecall(IInstruction &instruction, CPUState &state);
 void rv32i_ebreak(IInstruction &instruction, CPUState &state);
 
