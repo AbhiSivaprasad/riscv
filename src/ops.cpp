@@ -2,7 +2,12 @@
 
 #include "util.hpp"
 
-// void rv32i_lui(UInstruction &instruction, CPUState &state) {}
+// XXX: is signed addition necessary for addrs
+
+// TODO: error checking
+void rv32i_lui(UInstruction &instruction, CPUState &state) {
+    state.set_x(instruction.rd, instruction.imm);
+}
 
 // TODO: error checking
 void rv32i_auipc(UInstruction &instruction, CPUState &state) {
