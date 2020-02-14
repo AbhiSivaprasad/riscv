@@ -11,6 +11,7 @@ project(
 src = files([
   'src/cpustate.cpp',
   'src/instruction.cpp',
+  'src/ops.cpp',
   'src/simulator.cpp',
   'src/util.cpp',
 ])
