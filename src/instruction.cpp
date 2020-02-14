@@ -67,3 +67,16 @@ UInstruction UInstruction::parseJ(uint32_t instruction) {
         & (get_bits(instruction, 31, 32) << 20);
     return u_instruction;
 }
+
+uint8_t matchOpcode(uint32_t instruction, uint32_t opcodeMask) {
+    return get_bits(instruction, 0, 7) ^ opcodeMask;
+}
+
+uint8_t matchFunct3(uint32_t instruction, uint32_t funct3Mask) {
+    return get_bits(instruction, 12, 15) ^ funct3Mask;
+}
+
+uint8_t matchFunct7(uint32_t instruction, uint32_t funct7Mask) {
+    return get_bits(instruction, 25, 32) ^ funct7Mask;
+}
+
