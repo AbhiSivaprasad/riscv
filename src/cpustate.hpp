@@ -10,8 +10,8 @@ class CPUState {
     uint32_t sp = 0;
 
     public:
-    void set_x_register(int i, uint32_t val);
-    uint32_t get_x_register(int i);
+    void set_x(int i, uint32_t val);
+    uint32_t get_x(int i);
     void set_pc(uint32_t val);
     uint32_t get_pc();
 };
