@@ -31,7 +31,7 @@ SInstruction SInstruction::parseS(uint32_t instruction) {
     s_instruction.rs1 = get_bits(instruction, 15, 20);
     s_instruction.rs2 = get_bits(instruction, 20, 25);
     uint32_t imm = get_bits(instruction, 7, 12)
-        & (get_bits(instruction, 25, 32) << 5);
+        | (get_bits(instruction, 25, 32) << 5);
     s_instruction.imm = sign_extend(imm, 11);
     return s_instruction;
 }
@@ -43,9 +43,9 @@ SInstruction SInstruction::parseB(uint32_t instruction) {
     s_instruction.rs1 = get_bits(instruction, 15, 20);
     s_instruction.rs2 = get_bits(instruction, 20, 25);
     uint32_t imm = (get_bits(instruction, 7, 8) << 11)
-        & (get_bits(instruction, 8, 12) << 1)
-        & (get_bits(instruction, 25, 31) << 5)
-        & (get_bits(instruction, 31, 32) << 12);
+        | (get_bits(instruction, 8, 12) << 1)
+        | (get_bits(instruction, 25, 31) << 5)
+        | (get_bits(instruction, 31, 32) << 12);
     s_instruction.imm = sign_extend(imm, 12);
     return s_instruction;
 }
@@ -63,9 +63,9 @@ UInstruction UInstruction::parseJ(uint32_t instruction) {
     u_instruction.opcode = get_bits(instruction, 0, 7);
     u_instruction.rd = get_bits(instruction, 7, 12);
     uint32_t imm = (get_bits(instruction, 12, 20) << 12)
-        & (get_bits(instruction, 20, 21) << 11)
-        & (get_bits(instruction, 21, 31) << 1)
-        & (get_bits(instruction, 31, 32) << 20);
+        | (get_bits(instruction, 20, 21) << 11)
+        | (get_bits(instruction, 21, 31) << 1)
+        | (get_bits(instruction, 31, 32) << 20);
     u_instruction.imm = sign_extend(imm, 20);
     return u_instruction;
 }
