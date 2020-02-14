@@ -8,11 +8,5 @@ project(
     'werror=true',
   ],
 )
-src = files([
-  'src/cpustate.cpp',
-  'src/instruction.cpp',
-  'src/ops.cpp',
-  'src/simulator.cpp',
-  'src/util.cpp',
-])
-executable('riscv-simulator', src)
+subdir('src')
+subdir('test')
