@@ -100,15 +100,40 @@ void rv32i_lw(IInstruction &instruction, CPUState &state) {
     state.set_x(instruction.rd, val);
 }
 
-// void rv32i_lbu(IInstruction &instruction, CPUState &state) {}
+// TODO: error checking
+void rv32i_lbu(IInstruction &instruction, CPUState &state) {
+    uint32_t addr = instruction.rs1 + instruction.imm;
+    uint32_t val = state.get_mem8(addr);
+    state.set_x(instruction.rd, val);
+}
 
-// void rv32i_lhu(IInstruction &instruction, CPUState &state) {}
+// TODO: error checking
+void rv32i_lhu(IInstruction &instruction, CPUState &state) {
+    uint32_t addr = instruction.rs1 + instruction.imm;
+    uint32_t val = state.get_mem16(addr);
+    state.set_x(instruction.rd, val);
+}
 
-// void rv32i_sb(SInstruction &instruction, CPUState &state) {}
+// TODO: error checking
+void rv32i_sb(SInstruction &instruction, CPUState &state) {
+    uint32_t addr = instruction.rs1 + instruction.imm;
+    uint8_t val = state.get_x(instruction.rs2);
+    state.set_mem32(addr, val);
+}
 
-// void rv32i_sh(SInstruction &instruction, CPUState &state) {}
+// TODO: error checking
+void rv32i_sh(SInstruction &instruction, CPUState &state) {
+    uint32_t addr = instruction.rs1 + instruction.imm;
+    uint16_t val = state.get_x(instruction.rs2);
+    state.set_mem32(addr, val);
+}
 
-// void rv32i_sw(SInstruction &instruction, CPUState &state) {}
+// TODO: error checking
+void rv32i_sw(SInstruction &instruction, CPUState &state) {
+    uint32_t addr = instruction.rs1 + instruction.imm;
+    uint32_t val = state.get_x(instruction.rs2);
+    state.set_mem32(addr, val);
+}
 
 // void rv32i_addi(IInstruction &instruction, CPUState &state) {}
 
