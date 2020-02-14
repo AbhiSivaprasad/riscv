@@ -7,6 +7,7 @@
 class CPUState {
     std::array<uint32_t, 31> x_registers = { 0 };
     uint32_t pc = 0;
+    uint32_t sp = 0;
 
     public:
     void set_x_register(int i, uint32_t val);
