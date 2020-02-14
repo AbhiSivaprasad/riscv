@@ -1,9 +1,6 @@
 #include "instruction.hpp"
 
-uint32_t get_bits(uint32_t x, int i, int j) {
-    uint32_t mask = ~0 ^ (~0 << (j - i));
-    return (x >> i) & mask;
-}
+#include "util.hpp"
 
 // TODO: sign extend immediates
 
@@ -15,6 +12,7 @@ RInstruction RInstruction::parseR(uint32_t instruction) {
     r_instruction.rs1 = get_bits(instruction, 15, 20);
     r_instruction.rs2 = get_bits(instruction, 20, 25);
     r_instruction.funct7 = get_bits(instruction, 25, 32);
+    return r_instruction;
 }
 
 IInstruction IInstruction::parseI(uint32_t instruction) {
@@ -24,6 +22,7 @@ IInstruction IInstruction::parseI(uint32_t instruction) {
     i_instruction.funct3 = get_bits(instruction, 12, 15);
     i_instruction.rs1 = get_bits(instruction, 15, 20);
     i_instruction.imm = get_bits(instruction, 20, 32);
+    return i_instruction;
 }
 
 SInstruction SInstruction::parseS(uint32_t instruction) {
@@ -34,6 +33,7 @@ SInstruction SInstruction::parseS(uint32_t instruction) {
     s_instruction.rs2 = get_bits(instruction, 20, 25);
     s_instruction.imm = get_bits(instruction, 7, 12)
         & (get_bits(instruction, 25, 32) << 5);
+    return s_instruction;
 }
 
 SInstruction SInstruction::parseB(uint32_t instruction) {
@@ -42,10 +42,11 @@ SInstruction SInstruction::parseB(uint32_t instruction) {
     s_instruction.funct3 = get_bits(instruction, 12, 15);
     s_instruction.rs1 = get_bits(instruction, 15, 20);
     s_instruction.rs2 = get_bits(instruction, 20, 25);
-    s_instruction.imm = (BIT_7(instruction) << 11)
+    s_instruction.imm = (get_bits(instruction, 7, 8) << 11)
         & (get_bits(instruction, 8, 12) << 1)
         & (get_bits(instruction, 25, 31) << 5)
         & (get_bits(instruction, 31, 32) << 12);
+    return s_instruction;
 }
 
 UInstruction UInstruction::parseU(uint32_t instruction) {
@@ -53,6 +54,7 @@ UInstruction UInstruction::parseU(uint32_t instruction) {
     u_instruction.opcode = get_bits(instruction, 0, 7);
     u_instruction.rd = get_bits(instruction, 7, 12);
     u_instruction.imm = get_bits(instruction, 12, 32) << 12;
+    return u_instruction;
 }
 
 UInstruction UInstruction::parseJ(uint32_t instruction) {
@@ -63,4 +65,5 @@ UInstruction UInstruction::parseJ(uint32_t instruction) {
         & (get_bits(instruction, 20, 21) << 11)
         & (get_bits(instruction, 21, 31) << 1)
         & (get_bits(instruction, 31, 32) << 20);
+    return u_instruction;
 }

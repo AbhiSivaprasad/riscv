@@ -10,6 +10,8 @@ project(
 )
 src = files([
   'src/cpustate.cpp',
+  'src/instruction.cpp',
   'src/simulator.cpp',
+  'src/util.cpp',
 ])
 executable('riscv-simulator', src)
