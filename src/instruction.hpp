@@ -3,6 +3,8 @@
 
 #include <cstdint>
 
+#define WORD_SIZE 32
+
 /* UNIQUE OPCODES */
 #define OP_BRANCH 0x63  // 1100011
 #define OP_JALR   0x67  // 1100111

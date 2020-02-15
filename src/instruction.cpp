@@ -1,5 +1,4 @@
 #include "instruction.hpp"
-
 #include "util.hpp"
 
 RInstruction RInstruction::parseR(uint32_t instruction) {
