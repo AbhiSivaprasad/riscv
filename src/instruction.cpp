@@ -81,4 +81,3 @@ uint8_t matchFunct3(uint32_t instruction, uint32_t funct3Mask) {
 uint8_t matchFunct7(uint32_t instruction, uint32_t funct7Mask) {
     return get_bits(instruction, 25, 32) ^ funct7Mask;
 }
-
