@@ -1,7 +1,7 @@
-#include "cpustate.hpp"
+#include "dispatch.hpp"
+
 #include "instruction.hpp"
 #include "ops.hpp"
-
 
 void dispatch(uint32_t instruction, CPUState state) {
 	if (matchOpcode(instruction, OP_AUIPC)) {

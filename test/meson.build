@@ -1,4 +1,5 @@
 src = files(
+  'instruction.cpp',
   'main.cpp',
   'util.cpp',
 )
