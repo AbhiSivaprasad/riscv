@@ -12,7 +12,7 @@
 #define OP_COMPI  (0b0010011)
 #define OP_COMP   (0b0110011)
 #define OP_LOAD   (0b0000011)
-#define OP_STORE  (0b0100011)
+#define OP_STORE  (0b0100011)   
 #define OP_FENCE  (0b0001111)
 
 /* COMP */
@@ -97,8 +97,8 @@ struct UInstruction {
     static UInstruction parseJ(uint32_t instruction);
 };
 
-uint8_t matchFunct3(uint32_t instruction, uint32_t funct3Mask);
-uint8_t matchFunct7(uint32_t instruction, uint32_t funct7Mask);
-uint8_t matchOpcode(uint32_t instruction, uint32_t opcodeMask);
+uint8_t match_funct3(uint32_t instruction, uint32_t funct3Mask);
+uint8_t match_funct7(uint32_t instruction, uint32_t funct7Mask);
+uint8_t match_opcode(uint32_t instruction, uint32_t opcodeMask);
 
 #endif
