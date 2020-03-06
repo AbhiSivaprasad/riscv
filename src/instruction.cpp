@@ -69,14 +69,14 @@ UInstruction UInstruction::parseJ(uint32_t instruction) {
     return u_instruction;
 }
 
-bool match_opcode(uint32_t instruction, uint32_t opcode) {
-    return get_bits(instruction, 0, 7) == opcode;
+uint8_t match_opcode(uint32_t instruction, uint32_t opcodeMask) {
+    return get_bits(instruction, 0, 7) ^ opcodeMask;
 }
 
-bool match_funct3(uint32_t instruction, uint32_t funct3) {
-    return get_bits(instruction, 12, 15) == funct3;
+uint8_t match_funct3(uint32_t instruction, uint32_t funct3Mask) {
+    return get_bits(instruction, 12, 15) ^ funct3Mask;
 }
 
-bool match_funct7(uint32_t instruction, uint32_t funct7) {
-    return get_bits(instruction, 25, 32) == funct7;
+uint8_t match_funct7(uint32_t instruction, uint32_t funct7Mask) {
+    return get_bits(instruction, 25, 32) ^ funct7Mask;
 }
