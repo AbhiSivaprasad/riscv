@@ -10,8 +10,6 @@ int main() {
     uint32_t programSize; // size of code segment
     uint32_t finalAddr;   // address of last instruction to execute
 
-    // TODO: load interrupt routine into memory 
-
     // TODO: load binary into memory
     finalAddr = PROCESS_START_ADDR + programSize;
 
@@ -19,7 +17,14 @@ int main() {
         // current program counter
         uint32_t pc = state.get_pc();
 
-        // fetch instruction 
+        // check if instruction is a syscall
+        if (pc == KERNEL_ENTRY_ADDR) {
+            // handle system call
+            handle_syscall(state);
+            continue;
+        }
+
+        // instruction isn't a syscall, fetch from memory
         uint32_t instruction = state.get_mem32(pc);
 
         // decode + execute instruction
@@ -34,3 +39,4 @@ int main() {
         state.set_pc(pc + 4);
     }
 }
+
