@@ -31,7 +31,7 @@ void CPUState::set_mem8(uint32_t addr, uint8_t val) {
 }
 
 uint16_t CPUState::get_mem16(uint32_t addr) {
-    return get_mem8(addr) & (get_mem8(addr + 1) << 8);
+    return get_mem8(addr) | (get_mem8(addr + 1) << 8);
 }
 
 void CPUState::set_mem16(uint32_t addr, uint16_t val) {
@@ -40,7 +40,7 @@ void CPUState::set_mem16(uint32_t addr, uint16_t val) {
 }
 
 uint32_t CPUState::get_mem32(uint32_t addr) {
-    return get_mem16(addr) & (get_mem16(addr + 2) << 16);
+    return get_mem16(addr) | (get_mem16(addr + 2) << 16);
 }
 
 void CPUState::set_mem32(uint32_t addr, uint32_t val) {

@@ -10,3 +10,4 @@ project(
 )
 subdir('src')
 subdir('test')
+executable('simulator', 'src/simulator.cpp', link_with: riscv_lib)
