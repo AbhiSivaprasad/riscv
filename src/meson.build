@@ -3,6 +3,7 @@ src = files(
   'dispatch.cpp',
   'instruction.cpp',
   'ops.cpp',
+  'os.cpp',
   'util.cpp',
 )
 riscv_lib = shared_library('riscv', src)

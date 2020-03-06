@@ -3,7 +3,7 @@
 #include "os.hpp"
 #include "cpustate.hpp"
 
-void load_elf(CPUState& state) {}
+void load_elf(CPUState&) {}
 
 void handle_syscall(CPUState& state) {
 	// get syscall info according to calling convention
