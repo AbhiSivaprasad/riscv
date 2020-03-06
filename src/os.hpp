@@ -1,3 +1,4 @@
+#include "cpustate.hpp"
 #ifndef __OS_HPP__
 #define __OS_HPP__
 
