@@ -251,9 +251,9 @@ void rv32i_and(RInstruction &instruction, CPUState &state) {
     state.set_x(instruction.rd, r1 & r2);
 }
 
-// void rv32i_fence(IInstruction &instruction, CPUState &state) {}
+void rv32i_fence(IInstruction &, CPUState &) {}
 
-// void rv32i_fence_i(IInstruction &instruction, CPUState &state) {}
+void rv32i_fencei(IInstruction &, CPUState &) {}
 
 // void rv32i_ecall(IInstruction &instruction, CPUState &state) {}
 

@@ -97,8 +97,8 @@ struct UInstruction {
     static UInstruction parseJ(uint32_t instruction);
 };
 
-uint8_t match_funct3(uint32_t instruction, uint32_t funct3Mask);
-uint8_t match_funct7(uint32_t instruction, uint32_t funct7Mask);
-uint8_t match_opcode(uint32_t instruction, uint32_t opcodeMask);
+bool match_funct3(uint32_t instruction, uint32_t funct3);
+bool match_funct7(uint32_t instruction, uint32_t funct7);
+bool match_opcode(uint32_t instruction, uint32_t opcode);
 
 #endif
