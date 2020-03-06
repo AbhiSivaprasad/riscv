@@ -33,6 +33,7 @@ void rv32i_sltiu(IInstruction &instruction, CPUState &state);
 void rv32i_xori(IInstruction &instruction, CPUState &state);
 void rv32i_ori(IInstruction &instruction, CPUState &state);
 void rv32i_and(IInstruction &instruction, CPUState &state);
+void rv32i_andi(IInstruction& instruction, CPUState& state);
 void rv32i_slli(RInstruction &instruction, CPUState &state);
 void rv32i_srli(RInstruction &instruction, CPUState &state);
 void rv32i_srai(RInstruction &instruction, CPUState &state);

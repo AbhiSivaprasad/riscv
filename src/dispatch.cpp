@@ -1,9 +1,9 @@
 #include "dispatch.hpp"
-
 #include "instruction.hpp"
 #include "ops.hpp"
 
 void dispatch(uint32_t instruction, CPUState& state) {
+	printf("%d", instruction);
 	if (match_opcode(instruction, OP_AUIPC)) {
 		UInstruction inst = UInstruction::parseU(instruction);
 		rv32i_auipc(inst, state);
@@ -48,6 +48,12 @@ void dispatch(uint32_t instruction, CPUState& state) {
 		else if (match_funct3(instruction, FUNCT3_XOR)) {
 			rv32i_xor(inst, state);
 		}
+		else if (match_funct3(instruction, FUNCT3_OR)) {
+			rv32i_or(inst, state);
+		}
+		else if (match_funct3(instruction, FUNCT3_AND)) {
+			rv32i_and(inst, state);
+		}
 		else if (match_funct3(instruction, FUNCT3_SRLA)) {
 			if (match_funct7(instruction, FUNCT7_SRL)) {
 				rv32i_srl(inst, state);
@@ -73,6 +79,12 @@ void dispatch(uint32_t instruction, CPUState& state) {
 		}
 		else if (match_funct3(instruction, FUNCT3_XOR)) {
 			rv32i_xori(inst, state);
+		}
+		else if (match_funct3(instruction, FUNCT3_OR)) {
+			rv32i_ori(inst, state);
+		}
+		else if (match_funct3(instruction, FUNCT3_AND)) {
+			rv32i_andi(inst, state);
 		}
 		else  {
 			RInstruction rinst = RInstruction::parseR(instruction);

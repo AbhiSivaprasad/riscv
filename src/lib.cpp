@@ -3,7 +3,7 @@
 void print(char *buf) {
 	// r23, is a caller saved register
 	// order of instructions is critical so use volatile
-	__asm__ volatile (
+	/*__asm__ volatile (
 		"ori 23,0,0"
 		"ori 23,23,%2"
 		"sh 23,10(0)"
@@ -18,5 +18,5 @@ void print(char *buf) {
 		"jalr 23,0,0"
 		: 
 		: "r" (SYSCALL_PRINTF, (buf >> 12), (buf << 20) >> 20)
-	);
+	);*/
 }
