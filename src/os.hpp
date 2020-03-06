@@ -1,3 +1,6 @@
+#ifndef __OS_HPP__
+#define __OS_HPP__
+
 // OS memory map
 #define KERNEL_ENTRY_ADDR 0      // entry point into kernel for syscalls
 #define PROCESS_START_ADDR 1000  // process address space
@@ -10,5 +13,7 @@
 #define SYSCALL_PRINTF 1
 
 void load_elf(CPUState &state);  // add elf datastructure as arg
-void handle_syscall(CPUState& state);
-void handle_printf(CPUState& state, uint32_t buf_addr);
+void handle_syscall(CPUState &state);
+void handle_printf(CPUState &state, uint32_t buf_addr);
+
+#endif
