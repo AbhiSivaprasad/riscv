@@ -2,8 +2,7 @@
 #include "instruction.hpp"
 #include "ops.hpp"
 
-void dispatch(uint32_t instruction, CPUState& state) {
-	printf("%d", instruction);
+bool dispatch(uint32_t instruction, CPUState& state) {
 	if (match_opcode(instruction, OP_AUIPC)) {
 		UInstruction inst = UInstruction::parseU(instruction);
 		rv32i_auipc(inst, state);
@@ -104,10 +103,12 @@ void dispatch(uint32_t instruction, CPUState& state) {
 	else if (match_opcode(instruction, OP_JAL)) {
 		UInstruction inst = UInstruction::parseJ(instruction);
 		rv32i_jal(inst, state);
+		return true;
 	}
 	else if (match_opcode(instruction, OP_JALR)) {
 		IInstruction inst = IInstruction::parseI(instruction);
 		rv32i_jalr(inst, state);
+		return true;
 	}
 	else if (match_opcode(instruction, OP_LOAD)) {
 		IInstruction inst = IInstruction::parseI(instruction);
@@ -152,4 +153,5 @@ void dispatch(uint32_t instruction, CPUState& state) {
 			rv32i_fencei(inst, state);
 		}
 	}
+	return false;
 }

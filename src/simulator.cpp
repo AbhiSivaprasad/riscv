@@ -50,16 +50,16 @@ int main(int argc, char *argv[]) {
         uint32_t instruction = state.get_mem32(pc);
 
         // decode + execute instruction
-        dispatch(instruction, state);
+        if (!dispatch(instruction, state)) {
+            state.set_pc(pc + 4);
+        }
 
         // if final instruction has been executed then break
-        if (pc + 4 == finalAddr) {
+        if (pc == finalAddr) {
             break;
         }
 
         // increment program counter
-        state.set_pc(pc + 4);
     }
-    std::cout << "x3: " << state.get_x(3) << "\n";
 }
 

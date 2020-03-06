@@ -7,7 +7,7 @@ void load_elf(CPUState&) {}
 
 void handle_syscall(CPUState& state) {
 	// get syscall info according to calling convention
-	uint32_t syscall_id = state.get_mem16(SYSCALL_ARG_ADDR);
+	uint32_t syscall_id = state.get_mem16(SYSCALL_ID_ADDR);
 	uint32_t arg = state.get_mem32(SYSCALL_ARG_ADDR);
 	uint32_t return_addr = state.get_mem32(SYSCALL_RETURN_ADDR);
 
