@@ -1,4 +1,5 @@
 #include "instruction.hpp"
+
 #include "util.hpp"
 
 RInstruction RInstruction::parseR(uint32_t instruction) {
@@ -67,16 +68,4 @@ UInstruction UInstruction::parseJ(uint32_t instruction) {
         | (get_bits(instruction, 31, 32) << 20);
     u_instruction.imm = sign_extend(imm, 20);
     return u_instruction;
-}
-
-bool match_opcode(uint32_t instruction, uint32_t opcode) {
-    return get_bits(instruction, 0, 7) == opcode;
-}
-
-bool match_funct3(uint32_t instruction, uint32_t funct3) {
-    return get_bits(instruction, 12, 15) == funct3;
-}
-
-bool match_funct7(uint32_t instruction, uint32_t funct7) {
-    return get_bits(instruction, 25, 32) == funct7;
 }

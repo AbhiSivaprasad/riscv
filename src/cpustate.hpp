@@ -12,16 +12,18 @@ class CPUState {
     std::array<uint8_t, MEMORY_SIZE> mem = {0};
 
     public:
-    uint32_t get_x(int i);
+    uint32_t get_x(int i) const;
     void set_x(int i, uint32_t val);
-    uint32_t get_pc();
+    uint32_t get_pc() const;
     void set_pc(uint32_t val);
-    uint8_t get_mem8(uint32_t addr);
+    uint8_t get_mem8(uint32_t addr) const;
     void set_mem8(uint32_t addr, uint8_t val);
-    uint16_t get_mem16(uint32_t addr);
+    uint16_t get_mem16(uint32_t addr) const;
     void set_mem16(uint32_t addr, uint16_t val);
-    uint32_t get_mem32(uint32_t addr);
+    uint32_t get_mem32(uint32_t addr) const;
     void set_mem32(uint32_t addr, uint32_t val);
 };
+
+std::ostream &operator<<(std::ostream &os, const CPUState &state);
 
 #endif

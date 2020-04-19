@@ -1,157 +1,166 @@
 #include "dispatch.hpp"
-#include "instruction.hpp"
+
 #include "ops.hpp"
+#include "util.hpp"
 
 bool dispatch(uint32_t instruction, CPUState& state) {
-	if (match_opcode(instruction, OP_AUIPC)) {
-		UInstruction inst = UInstruction::parseU(instruction);
-		rv32i_auipc(inst, state);
-	}
-	else if (match_opcode(instruction, OP_BRANCH)) {
-		SInstruction inst = SInstruction::parseB(instruction);
-		if (match_funct3(instruction, FUNCT3_BEQ)) {
-			rv32i_beq(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_BNE)) {
-			rv32i_bne(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_BLT)) {
-			rv32i_blt(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_BGE)) {
-			rv32i_bge(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_BLTU)) {
-			rv32i_bltu(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_BGEU)) {
-			rv32i_bgeu(inst, state);
-		}
-	}
-	else if (match_opcode(instruction, OP_COMP)) {
-		RInstruction inst = RInstruction::parseR(instruction);
-		if (match_funct3(instruction, FUNCT3_ADSB)) {
-			if (match_funct7(instruction, FUNCT7_SUB)) {
-				rv32i_sub(inst, state);
-			}
-			else if (match_funct7(instruction, FUNCT7_ADD)) {
-				rv32i_add(inst, state);
-			}
-		}
-		else if (match_funct3(instruction, FUNCT3_SLT)) {
-			rv32i_slt(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_SLTU)) {
-			rv32i_sltu(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_XOR)) {
-			rv32i_xor(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_OR)) {
-			rv32i_or(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_AND)) {
-			rv32i_and(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_SRLA)) {
-			if (match_funct7(instruction, FUNCT7_SRL)) {
-				rv32i_srl(inst, state);
-			}
-			else if (match_funct7(instruction, FUNCT7_SRA)) {
-				rv32i_sra(inst, state);
-			}
-		}
-		else if (match_funct3(instruction, FUNCT3_SLL)) {
-			rv32i_sll(inst, state);
-		}
-	}
-	else if (match_opcode(instruction, OP_COMPI)) {
-		IInstruction inst = IInstruction::parseI(instruction);
-		if (match_funct3(instruction, FUNCT3_ADD)) {
-			rv32i_addi(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_SLT)) {
-			rv32i_slti(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_SLTU)) {
-			rv32i_sltiu(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_XOR)) {
-			rv32i_xori(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_OR)) {
-			rv32i_ori(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_AND)) {
-			rv32i_andi(inst, state);
-		}
-		else  {
-			RInstruction rinst = RInstruction::parseR(instruction);
-			if (match_funct3(instruction, FUNCT3_SRLA)) {
-				if (match_funct7(instruction, FUNCT7_SRL)) {
-					rv32i_srli(rinst, state);
-				}
-				else if (match_funct7(instruction, FUNCT7_SRA)) {
-					rv32i_srai(rinst, state);
-				}
-			}
-			else if (match_funct3(instruction, FUNCT3_SLL)) {
-				rv32i_slli(rinst, state);
-			}
-		}
-	}
-	else if (match_opcode(instruction, OP_JAL)) {
-		UInstruction inst = UInstruction::parseJ(instruction);
-		rv32i_jal(inst, state);
-		return true;
-	}
-	else if (match_opcode(instruction, OP_JALR)) {
-		IInstruction inst = IInstruction::parseI(instruction);
-		rv32i_jalr(inst, state);
-		return true;
-	}
-	else if (match_opcode(instruction, OP_LOAD)) {
-		IInstruction inst = IInstruction::parseI(instruction);
-		if (match_funct3(instruction, FUNCT3_LB)) {
-			rv32i_lb(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_LH)) {
-			rv32i_lh(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_LW)) {
-			rv32i_lw(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_LBU)) {
-			rv32i_lbu(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_LHU)) {
-			rv32i_lhu(inst, state);
-		}
-	}
-	else if (match_opcode(instruction, OP_STORE)) {
-		SInstruction inst = SInstruction::parseS(instruction);
-		if (match_funct3(instruction, FUNCT3_SB)) {
-			rv32i_sb(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_SH)) {
-			rv32i_sh(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_SW)) {
-			rv32i_sw(inst, state);
-		}
-	}
-	else if (match_opcode(instruction, OP_LUI)) {
-		UInstruction inst = UInstruction::parseU(instruction);
-		rv32i_lui(inst, state);
-	}
-	else if (match_opcode(instruction, OP_FENCE)) {
-		IInstruction inst = IInstruction::parseI(instruction);
-		if (match_funct3(instruction, FUNCT3_FENCE)) {
-			rv32i_fence(inst, state);
-		}
-		else if (match_funct3(instruction, FUNCT3_FENCEI)) {
-			rv32i_fencei(inst, state);
-		}
-	}
-	return false;
+    uint8_t opcode = get_bits(instruction, 0, 7);
+    uint8_t funct3 = get_bits(instruction, 12, 15);
+    uint8_t funct7 = get_bits(instruction, 25, 32);
+    switch (opcode) {
+        case OP_AUIPC:
+            rv32i_auipc(instruction, state);
+            break;
+        case OP_BRANCH:
+            switch (funct3) {
+                case FUNCT3_BEQ:
+                    rv32i_beq(instruction, state);
+                    break;
+                case FUNCT3_BNE:
+                    rv32i_bne(instruction, state);
+                    break;
+                case FUNCT3_BLT:
+                    rv32i_blt(instruction, state);
+                    break;
+                case FUNCT3_BGE:
+                    rv32i_bge(instruction, state);
+                    break;
+                case FUNCT3_BLTU:
+                    rv32i_bltu(instruction, state);
+                    break;
+                case FUNCT3_BGEU:
+                    rv32i_bgeu(instruction, state);
+                    break;
+            }
+            break;
+        case OP_COMP:
+            switch (funct3) {
+                case FUNCT3_ADD_SUB:
+                    switch (funct7) {
+                        case FUNCT7_ADD:
+                            rv32i_add(instruction, state);
+                            break;
+                        case FUNCT7_SUB:
+                            rv32i_sub(instruction, state);
+                            break;
+                    }
+                    break;
+                case FUNCT3_SLT:
+                    rv32i_slt(instruction, state);
+                    break;
+                case FUNCT3_SLTU:
+                    rv32i_sltu(instruction, state);
+                    break;
+                case FUNCT3_XOR:
+                    rv32i_xor(instruction, state);
+                    break;
+                case FUNCT3_OR:
+                    rv32i_or(instruction, state);
+                    break;
+                case FUNCT3_AND:
+                    rv32i_and(instruction, state);
+                    break;
+                case FUNCT3_SRL_SRA:
+                    switch (funct7) {
+                        case FUNCT7_SRL:
+                            rv32i_srl(instruction, state);
+                            break;
+                        case FUNCT7_SRA:
+                            rv32i_sra(instruction, state);
+                            break;
+                    }
+                    break;
+                case FUNCT3_SLL:
+                    rv32i_sll(instruction, state);
+                    break;
+            }
+            break;
+        case OP_COMPI:
+            switch (funct3) {
+                case FUNCT3_ADD_SUB:
+                    rv32i_addi(instruction, state);
+                    break;
+                case FUNCT3_SLT:
+                    rv32i_slti(instruction, state);
+                    break;
+                case FUNCT3_SLTU:
+                    rv32i_sltiu(instruction, state);
+                    break;
+                case FUNCT3_XOR:
+                    rv32i_xori(instruction, state);
+                    break;
+                case FUNCT3_OR:
+                    rv32i_ori(instruction, state);
+                    break;
+                case FUNCT3_AND:
+                    rv32i_andi(instruction, state);
+                    break;
+                case FUNCT3_SRL_SRA:
+                    switch (funct7) {
+                        case FUNCT7_SRL:
+                            rv32i_srli(instruction, state);
+                            break;
+                        case FUNCT7_SRA:
+                            rv32i_srai(instruction, state);
+                            break;
+                    }
+                    break;
+                case FUNCT3_SLL:
+                        rv32i_slli(instruction, state);
+                        break;
+            }
+            break;
+        case OP_JAL:
+            rv32i_jal(instruction, state);
+            return true;
+        case OP_JALR:
+            rv32i_jalr(instruction, state);
+            return true;
+        case OP_LOAD:
+            switch (funct3) {
+                case FUNCT3_LB:
+                    rv32i_lb(instruction, state);
+                    break;
+                case FUNCT3_LH:
+                    rv32i_lh(instruction, state);
+                    break;
+                case FUNCT3_LW:
+                    rv32i_lw(instruction, state);
+                    break;
+                case FUNCT3_LBU:
+                    rv32i_lbu(instruction, state);
+                    break;
+                case FUNCT3_LHU:
+                    rv32i_lhu(instruction, state);
+                    break;
+            }
+            break;
+        case OP_STORE:
+            switch (funct3) {
+                case FUNCT3_SB:
+                    rv32i_sb(instruction, state);
+                    break;
+                case FUNCT3_SH:
+                    rv32i_sh(instruction, state);
+                    break;
+                case FUNCT3_SW:
+                    rv32i_sw(instruction, state);
+                    break;
+            }
+            break;
+        case OP_LUI:
+            rv32i_lui(instruction, state);
+            break;
+        case OP_FENCE:
+            switch (funct3) {
+                case FUNCT3_FENCE:
+                    rv32i_fence(instruction, state);
+                    break;
+                case FUNCT3_FENCEI:
+                    rv32i_fencei(instruction, state);
+                    break;
+            }
+            break;
+    }
+    return false;
 }

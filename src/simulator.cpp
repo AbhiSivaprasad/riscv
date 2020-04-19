@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
 
         // decode + execute instruction
         if (!dispatch(instruction, state)) {
+            // increment program counter
             state.set_pc(pc + 4);
         }
 
@@ -58,8 +59,8 @@ int main(int argc, char *argv[]) {
         if (pc == finalAddr) {
             break;
         }
-
-        // increment program counter
     }
+
+    std::cout << state << "\n";
 }
 

@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-/* UNIQUE OPCODES */
+/* OPCODES */
 #define OP_BRANCH (0b1100011)
 #define OP_JALR   (0b1100111)
 #define OP_JAL    (0b1101111)
@@ -12,17 +12,16 @@
 #define OP_COMPI  (0b0010011)
 #define OP_COMP   (0b0110011)
 #define OP_LOAD   (0b0000011)
-#define OP_STORE  (0b0100011)   
+#define OP_STORE  (0b0100011)
 #define OP_FENCE  (0b0001111)
 
 /* COMP */
-#define FUNCT3_ADSB (0) // add, sub
-#define FUNCT3_ADD  (0)
+#define FUNCT3_ADD_SUB (0) // add, sub
 #define FUNCT3_SLL  (1)
 #define FUNCT3_SLT  (2)
 #define FUNCT3_SLTU (3)
 #define FUNCT3_XOR  (4)
-#define FUNCT3_SRLA (5) // srl, sra
+#define FUNCT3_SRL_SRA (5) // srl, sra
 #define FUNCT3_OR   (6)
 #define FUNCT3_AND  (7)
 
@@ -96,9 +95,5 @@ struct UInstruction {
     static UInstruction parseU(uint32_t instruction);
     static UInstruction parseJ(uint32_t instruction);
 };
-
-bool match_funct3(uint32_t instruction, uint32_t funct3Mask);
-bool match_funct7(uint32_t instruction, uint32_t funct7Mask);
-bool match_opcode(uint32_t instruction, uint32_t opcodeMask);
 
 #endif
