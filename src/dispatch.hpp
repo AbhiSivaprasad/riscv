@@ -3,6 +3,6 @@
 
 #include "cpustate.hpp"
 
-bool dispatch(uint32_t instruction, CPUState &state);
+bool dispatch(uint32_t instruction, CPUState& state);
 
 #endif

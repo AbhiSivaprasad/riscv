@@ -5,7 +5,7 @@
 #include "cpustate.hpp"
 #include "dispatch.hpp"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     CPUState state;       // initialized state
     uint32_t programSize; // size of code segment
     uint32_t finalAddr;   // address of last instruction to execute

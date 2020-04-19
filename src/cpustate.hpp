@@ -24,6 +24,6 @@ class CPUState {
     void set_mem32(uint32_t addr, uint32_t val);
 };
 
-std::ostream &operator<<(std::ostream &os, const CPUState &state);
+std::ostream& operator<<(std::ostream& os, const CPUState& state);
 
 #endif

@@ -1,6 +1,6 @@
 #include "os.hpp"
 
-void print(char *buf) {
+void print(char* buf) {
     // r23, is a caller saved register
     // order of instructions is critical so use volatile
     /*

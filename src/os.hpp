@@ -14,7 +14,7 @@
 // identifiers for syscalls
 #define SYSCALL_PRINTF 1
 
-void handle_syscall(CPUState &state);
-void handle_printf(CPUState &state, uint32_t buf_addr);
+void handle_syscall(CPUState& state);
+void handle_printf(CPUState& state, uint32_t buf_addr);
 
 #endif

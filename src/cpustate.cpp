@@ -50,7 +50,7 @@ void CPUState::set_mem32(uint32_t addr, uint32_t val) {
     set_mem16(addr + 2, val >> 16);
 }
 
-std::ostream &operator<<(std::ostream &os, const CPUState &state) {
+std::ostream& operator<<(std::ostream& os, const CPUState& state) {
     os << "CPUState {\n";
     for (int i = 0; i < 32; i++) {
         os << "\tx" << i << ": " << state.get_x(i) << "\n";
