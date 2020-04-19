@@ -11,7 +11,7 @@ class CPUState {
     uint32_t pc = 0;
     std::map<uint32_t, uint8_t*> mem;
 
-    uint8_t* memmap(uint32_t addr);
+    uint8_t* get_page(uint32_t addr);
 
     public:
     uint32_t get_x(int i) const;

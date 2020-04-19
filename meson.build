@@ -8,6 +8,7 @@ project(
     'werror=true',
   ],
 )
+incdir = include_directories('include')
 subdir('src')
 subdir('test')
 executable('simulator', 'src/simulator.cpp', link_with: riscv_lib)

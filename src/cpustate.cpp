@@ -26,13 +26,13 @@ void CPUState::set_pc(uint32_t val) {
 }
 
 uint8_t CPUState::get_mem8(uint32_t addr) {
-    uint8_t* page = memmap(addr);
+    uint8_t* page = get_page(addr);
     uint32_t off = get_bits(addr, 0, PAGE_SIZE);
     return page[off];
 }
 
 void CPUState::set_mem8(uint32_t addr, uint8_t val) {
-    uint8_t* page = memmap(addr);
+    uint8_t* page = get_page(addr);
     uint32_t off = get_bits(addr, 0, PAGE_SIZE);
     page[off] = val;
 }
@@ -42,7 +42,7 @@ uint16_t CPUState::get_mem16(uint32_t addr) {
 }
 
 void CPUState::set_mem16(uint32_t addr, uint16_t val) {
-    set_mem8(addr, val & 0xFF);
+    set_mem8(addr, val);
     set_mem8(addr + 1, val >> 8);
 }
 
@@ -51,17 +51,17 @@ uint32_t CPUState::get_mem32(uint32_t addr) {
 }
 
 void CPUState::set_mem32(uint32_t addr, uint32_t val) {
-    set_mem16(addr, val & 0xFFFF);
+    set_mem16(addr, val);
     set_mem16(addr + 2, val >> 16);
 }
 
-uint8_t* CPUState::memmap(uint32_t addr) {
+uint8_t* CPUState::get_page(uint32_t addr) {
     uint32_t i = get_bits(addr, PAGE_SIZE, 32);
     auto it = mem.find(i);
     if (it != mem.end()) {
         return it->second;
     }
-    uint8_t* page = (uint8_t*)malloc(1 << PAGE_SIZE);
+    uint8_t* page = (uint8_t*)calloc(1 << PAGE_SIZE, sizeof(uint8_t));
     mem[i] = page;
     return page;
 }

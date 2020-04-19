@@ -13,6 +13,18 @@ RInstruction RInstruction::parseR(uint32_t instruction) {
     return r_instruction;
 }
 
+std::ostream& operator<<(std::ostream& os, const RInstruction& instruction) {
+    os << "RInstruction {\n";
+    os << "\topcode: " << (uint32_t)instruction.opcode << "\n";
+    os << "\trd: " << (uint32_t)instruction.rd << "\n";
+    os << "\tfunct3: " << (uint32_t)instruction.funct3 << "\n";
+    os << "\trs1: " << (uint32_t)instruction.rs1 << "\n";
+    os << "\trs2: " << (uint32_t)instruction.rs2 << "\n";
+    os << "\tfunct7: " << (uint32_t)instruction.funct7 << "\n";
+    os << "}";
+    return os;
+}
+
 IInstruction IInstruction::parseI(uint32_t instruction) {
     IInstruction i_instruction;
     i_instruction.opcode = get_bits(instruction, 0, 7);
@@ -22,6 +34,17 @@ IInstruction IInstruction::parseI(uint32_t instruction) {
     uint32_t imm = get_bits(instruction, 20, 32);
     i_instruction.imm = sign_extend(imm, 11);
     return i_instruction;
+}
+
+std::ostream& operator<<(std::ostream& os, const IInstruction& instruction) {
+    os << "IInstruction {\n";
+    os << "\topcode: " << (uint32_t)instruction.opcode << "\n";
+    os << "\trd: " << (uint32_t)instruction.rd << "\n";
+    os << "\tfunct3: " << (uint32_t)instruction.funct3 << "\n";
+    os << "\trs1: " << (uint32_t)instruction.rs1 << "\n";
+    os << "\timm: " << (uint32_t)instruction.imm << "\n";
+    os << "}";
+    return os;
 }
 
 SInstruction SInstruction::parseS(uint32_t instruction) {
@@ -50,6 +73,17 @@ SInstruction SInstruction::parseB(uint32_t instruction) {
     return s_instruction;
 }
 
+std::ostream& operator<<(std::ostream& os, const SInstruction& instruction) {
+    os << "SInstruction {\n";
+    os << "\topcode: " << (uint32_t)instruction.opcode << "\n";
+    os << "\timm: " << (uint32_t)instruction.imm << "\n";
+    os << "\tfunct3: " << (uint32_t)instruction.funct3 << "\n";
+    os << "\trs1: " << (uint32_t)instruction.rs1 << "\n";
+    os << "\trs2: " << (uint32_t)instruction.rs2 << "\n";
+    os << "}";
+    return os;
+}
+
 UInstruction UInstruction::parseU(uint32_t instruction) {
     UInstruction u_instruction;
     u_instruction.opcode = get_bits(instruction, 0, 7);
@@ -68,4 +102,13 @@ UInstruction UInstruction::parseJ(uint32_t instruction) {
         | (get_bits(instruction, 31, 32) << 20);
     u_instruction.imm = sign_extend(imm, 20);
     return u_instruction;
+}
+
+std::ostream& operator<<(std::ostream& os, const UInstruction& instruction) {
+    os << "UInstruction {\n";
+    os << "\topcode: " << (uint32_t)instruction.opcode << "\n";
+    os << "\trd: " << (uint32_t)instruction.rd << "\n";
+    os << "\timm: " << (uint32_t)instruction.imm << "\n";
+    os << "}";
+    return os;
 }

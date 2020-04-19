@@ -49,7 +49,19 @@ void rv32i_or(uint32_t instruction, CPUState& state);
 void rv32i_and(uint32_t instruction, CPUState& state);
 void rv32i_fence(uint32_t instruction, CPUState& state);
 void rv32i_fencei(uint32_t instruction, CPUState& state);
-// void rv32i_ecall(uint32_t instruction, CPUState& state);
-// void rv32i_ebreak(uint32_t instruction, CPUState& state);
+void rv32i_ecall(uint32_t instruction, CPUState& state);
+void rv32i_ebreak(uint32_t instruction, CPUState& state);
+
+void rv32a_lr(uint32_t instruction, CPUState& state);
+void rv32a_sc(uint32_t instruction, CPUState& state);
+void rv32a_amoswap(uint32_t instruction, CPUState& state);
+void rv32a_amoadd(uint32_t instruction, CPUState& state);
+void rv32a_amoxor(uint32_t instruction, CPUState& state);
+void rv32a_amoand(uint32_t instruction, CPUState& state);
+void rv32a_amoor(uint32_t instruction, CPUState& state);
+void rv32a_amomin(uint32_t instruction, CPUState& state);
+void rv32a_amomax(uint32_t instruction, CPUState& state);
+void rv32a_amominu(uint32_t instruction, CPUState& state);
+void rv32a_amomaxu(uint32_t instruction, CPUState& state);
 
 #endif
