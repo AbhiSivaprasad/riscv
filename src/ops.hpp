@@ -49,7 +49,7 @@ void rv32i_or(uint32_t instruction, CPUState& state);
 void rv32i_and(uint32_t instruction, CPUState& state);
 void rv32i_fence(uint32_t instruction, CPUState& state);
 void rv32i_fencei(uint32_t instruction, CPUState& state);
-void rv32i_ecall(uint32_t instruction, CPUState& state);
-void rv32i_ebreak(uint32_t instruction, CPUState& state);
+// void rv32i_ecall(uint32_t instruction, CPUState& state);
+// void rv32i_ebreak(uint32_t instruction, CPUState& state);
 
 #endif
