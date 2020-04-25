@@ -72,7 +72,7 @@ std::ostream& operator<<(std::ostream& os, const CPUState& state) {
         os << "\tx" << i << ": " << state.get_x(i) << "\n";
     }
     os << "\n";
-    os << "\tpc: " << state.get_pc() << "\n";
+    os << "\tpc: " << std::showbase << std::hex << state.get_pc() << std::dec << "\n";
     os << "}";
     return os;
 }
