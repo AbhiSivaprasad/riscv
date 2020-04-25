@@ -3,6 +3,7 @@
 #include "ops.hpp"
 #include "util.hpp"
 
+// returns true of pc should be incremented after
 bool dispatch(uint32_t instruction, CPUState& state) {
     uint8_t opcode = get_bits(instruction, 0, 7);
     uint8_t funct3;
@@ -15,23 +16,17 @@ bool dispatch(uint32_t instruction, CPUState& state) {
             funct3 = get_bits(instruction, 12, 15);
             switch (funct3) {
                 case FUNCT3_BEQ:
-                    rv32i_beq(instruction, state);
-                    break;
+                    return !rv32i_beq(instruction, state);
                 case FUNCT3_BNE:
-                    rv32i_bne(instruction, state);
-                    break;
+                    return !rv32i_bne(instruction, state);
                 case FUNCT3_BLT:
-                    rv32i_blt(instruction, state);
-                    break;
+                    return !rv32i_blt(instruction, state);
                 case FUNCT3_BGE:
-                    rv32i_bge(instruction, state);
-                    break;
+                    return !rv32i_bge(instruction, state);
                 case FUNCT3_BLTU:
-                    rv32i_bltu(instruction, state);
-                    break;
+                    return !rv32i_bltu(instruction, state);
                 case FUNCT3_BGEU:
-                    rv32i_bgeu(instruction, state);
-                    break;
+                    return !rv32i_bgeu(instruction, state);
             }
             break;
         case OP_COMP:
