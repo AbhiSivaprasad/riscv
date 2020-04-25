@@ -1,5 +1,6 @@
 src = files(
   'instruction.cpp',
+  'cpustate.cpp',
   'main.cpp',
   'util.cpp',
 )
