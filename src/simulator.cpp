@@ -4,7 +4,6 @@
 #include "cpustate.hpp"
 #include "dispatch.hpp"
 #include "elf.hpp"
-#include "os.hpp"
 
 int main(int argc, char* argv[]) {
     CPUState state;
@@ -24,13 +23,14 @@ int main(int argc, char* argv[]) {
     std::cout << "Start state:\n" << state << "\n";
 
     while (1) {
-        std::cout << state << "\n";
         try {
             // fetch instruction
             uint32_t instruction = state.get_mem32(state.get_pc());
 
             // decode + execute instruction
-            dispatch(instruction, state);
+            if (!dispatch(instruction, state)) {
+                break;
+            }
 
             // increment program counter
             state.set_pc(state.get_pc() + 4);

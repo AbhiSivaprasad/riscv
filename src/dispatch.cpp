@@ -3,7 +3,8 @@
 #include "ops.hpp"
 #include "util.hpp"
 
-void dispatch(uint32_t instruction, CPUState& state) {
+// returns false when stopping condition reached
+bool dispatch(uint32_t instruction, CPUState& state) {
     uint8_t opcode = get_bits(instruction, 0, 7);
     uint8_t funct3;
     uint8_t funct7;
@@ -219,11 +220,11 @@ void dispatch(uint32_t instruction, CPUState& state) {
                     rv32i_ecall(instruction, state);
                     break;
                 case FUNCT12_EBREAK:
-                    rv32i_ebreak(instruction, state);
-                    break;
+                    return false;
             }
             break;
         default:
             throw "unknown opcode";
     }
+    return true;
 }

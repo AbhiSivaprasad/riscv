@@ -5,6 +5,7 @@ src = files(
   'instruction.cpp',
   'ops.cpp',
   'os.cpp',
+  'syscalls.cpp',
   'util.cpp',
 )
 riscv_lib = shared_library('riscv', src, include_directories: incdir)

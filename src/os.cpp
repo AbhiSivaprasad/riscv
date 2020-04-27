@@ -1,32 +1,28 @@
 #include "os.hpp"
 
-#include <stdio.h>
-#include "cpustate.hpp"
+#include "syscalls.hpp"
+
+// XXX
+#include <iostream>
 
 void handle_syscall(CPUState& state) {
-    // get syscall info according to calling convention
-    uint32_t syscall_id = state.get_mem16(SYSCALL_ID_ADDR);
-    uint32_t arg = state.get_mem32(SYSCALL_ARG_ADDR);
-    uint32_t return_addr = state.get_mem32(SYSCALL_RETURN_ADDR);
-
-    // dispatch syscall to handler
-    switch (syscall_id) {
-    case SYSCALL_PRINTF:
-        handle_printf(state, arg);
-        break;
-    default:
-        printf("Invalid syscall id: %d", syscall_id);
+    uint32_t syscall = state.get_x(17);
+    uint32_t arg0 = state.get_x(10);
+    uint32_t arg1 = state.get_x(11);
+    uint32_t arg2 = state.get_x(12);
+    // uint32_t arg3 = state.get_x(13);
+    // uint32_t arg4 = state.get_x(14);
+    // uint32_t arg5 = state.get_x(15);
+    // uint32_t arg6 = state.get_x(16);
+    uint32_t ret;
+    switch (syscall) {
+        case SYSCALL_WRITE:
+            ret = syscall_write(state, arg0, arg1, arg2);
+            break;
+        default:
+            std::string err = "unknown syscall " + std::to_string(syscall);
+            throw err.c_str();
     }
-
-    // set pc back to return address
-    state.set_pc(return_addr);
-}
-
-void handle_printf(CPUState& state, uint32_t buf_addr) {
-    uint8_t byte;
-
-    // print each character until '\0'
-    while ((byte = state.get_mem8(buf_addr++))) {
-        putchar(byte);
-    }
+    state.set_x(10, ret);
+    return;
 }
