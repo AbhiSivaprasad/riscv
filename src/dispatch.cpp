@@ -3,8 +3,7 @@
 #include "ops.hpp"
 #include "util.hpp"
 
-// returns true of pc should be incremented after
-bool dispatch(uint32_t instruction, CPUState& state) {
+void dispatch(uint32_t instruction, CPUState& state) {
     uint8_t opcode = get_bits(instruction, 0, 7);
     uint8_t funct3;
     uint8_t funct7;
@@ -16,17 +15,23 @@ bool dispatch(uint32_t instruction, CPUState& state) {
             funct3 = get_bits(instruction, 12, 15);
             switch (funct3) {
                 case FUNCT3_BEQ:
-                    return !rv32i_beq(instruction, state);
+                    rv32i_beq(instruction, state);
+                    break;
                 case FUNCT3_BNE:
-                    return !rv32i_bne(instruction, state);
+                    rv32i_bne(instruction, state);
+                    break;
                 case FUNCT3_BLT:
-                    return !rv32i_blt(instruction, state);
+                    rv32i_blt(instruction, state);
+                    break;
                 case FUNCT3_BGE:
-                    return !rv32i_bge(instruction, state);
+                    rv32i_bge(instruction, state);
+                    break;
                 case FUNCT3_BLTU:
-                    return !rv32i_bltu(instruction, state);
+                    rv32i_bltu(instruction, state);
+                    break;
                 case FUNCT3_BGEU:
-                    return !rv32i_bgeu(instruction, state);
+                    rv32i_bgeu(instruction, state);
+                    break;
             }
             break;
         case OP_COMP:
@@ -113,10 +118,10 @@ bool dispatch(uint32_t instruction, CPUState& state) {
             break;
         case OP_JAL:
             rv32i_jal(instruction, state);
-            return false;
+            break;
         case OP_JALR:
             rv32i_jalr(instruction, state);
-            return false;
+            break;
         case OP_LOAD:
             funct3 = get_bits(instruction, 12, 15);
             switch (funct3) {
@@ -221,5 +226,4 @@ bool dispatch(uint32_t instruction, CPUState& state) {
         default:
             throw "unknown opcode";
     }
-    return true;
 }

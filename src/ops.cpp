@@ -21,7 +21,7 @@ void rv32i_jal(uint32_t instruction, CPUState& state) {
     UInstruction i = UInstruction::parseJ(instruction);
     std::cout << "jal " << i << "\n";
     state.set_x(i.rd, state.get_pc() + 4);
-    state.set_pc(state.get_pc() + i.imm);
+    state.set_pc(state.get_pc() + i.imm - 4); // pc will be incremented
 }
 
 void rv32i_jalr(uint32_t instruction, CPUState& state) {
@@ -30,79 +30,67 @@ void rv32i_jalr(uint32_t instruction, CPUState& state) {
     uint32_t target = i.imm + state.get_x(i.rs1);
     target &= ~0b1U;
     state.set_x(i.rd, state.get_pc() + 4);
-    state.set_pc(target);
+    state.set_pc(target - 4); // pc will be incremented
 }
 
-bool rv32i_beq(uint32_t instruction, CPUState& state) {
+void rv32i_beq(uint32_t instruction, CPUState& state) {
     SInstruction i = SInstruction::parseB(instruction);
     std::cout << "beq " << i << "\n";
     uint32_t r1 = state.get_x(i.rs1);
     uint32_t r2 = state.get_x(i.rs2);
     if (r1 == r2) {
-        state.set_pc(state.get_pc() + i.imm);
-        return true;
+        state.set_pc(state.get_pc() + i.imm - 4); // pc will be incremented
     }
-    return false;
 }
 
-bool rv32i_bne(uint32_t instruction, CPUState& state) {
+void rv32i_bne(uint32_t instruction, CPUState& state) {
     SInstruction i = SInstruction::parseB(instruction);
     std::cout << "bne " << i << "\n";
     uint32_t r1 = state.get_x(i.rs1);
     uint32_t r2 = state.get_x(i.rs2);
     if (r1 != r2) {
-        state.set_pc(state.get_pc() + i.imm);
-        return true;
+        state.set_pc(state.get_pc() + i.imm - 4); // pc will be incremented
     }
-    return false;
 }
 
-bool rv32i_blt(uint32_t instruction, CPUState& state) {
+void rv32i_blt(uint32_t instruction, CPUState& state) {
     SInstruction i = SInstruction::parseB(instruction);
     std::cout << "blt " << i << "\n";
     int32_t r1 = state.get_x(i.rs1);
     int32_t r2 = state.get_x(i.rs2);
     if (r1 < r2) {
-        state.set_pc(state.get_pc() + i.imm);
-        return true;
+        state.set_pc(state.get_pc() + i.imm - 4); // pc will be incremented
     }
-    return false;
 }
 
-bool rv32i_bge(uint32_t instruction, CPUState& state) {
+void rv32i_bge(uint32_t instruction, CPUState& state) {
     SInstruction i = SInstruction::parseB(instruction);
     std::cout << "bge " << i << "\n";
     int32_t r1 = state.get_x(i.rs1);
     int32_t r2 = state.get_x(i.rs2);
     if (r1 >= r2) {
-        state.set_pc(state.get_pc() + i.imm);
-        return true;
+        state.set_pc(state.get_pc() + i.imm - 4); // pc will be incremented
     }
-    return false;
 }
 
-bool rv32i_bltu(uint32_t instruction, CPUState& state) {
+void rv32i_bltu(uint32_t instruction, CPUState& state) {
     SInstruction i = SInstruction::parseB(instruction);
     std::cout << "bltu " << i << "\n";
     uint32_t r1 = state.get_x(i.rs1);
     uint32_t r2 = state.get_x(i.rs2);
     if (r1 < r2) {
-        state.set_pc(state.get_pc() + i.imm);
-        return true;
+        state.set_pc(state.get_pc() + i.imm - 4); // pc will be incremented
     }
-    return false;
 }
 
-bool rv32i_bgeu(uint32_t instruction, CPUState& state) {
+void rv32i_bgeu(uint32_t instruction, CPUState& state) {
     SInstruction i = SInstruction::parseB(instruction);
     std::cout << "bgeu " << i << "\n";
     uint32_t r1 = state.get_x(i.rs1);
     uint32_t r2 = state.get_x(i.rs2);
     if (r1 >= r2) {
-        state.set_pc(state.get_pc() + i.imm);
-        return true;
+        state.set_pc(state.get_pc() + i.imm); // pc will be incremented
     }
-    return false;
 }
 
 void rv32i_lb(uint32_t instruction, CPUState& state) {

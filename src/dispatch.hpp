@@ -73,6 +73,6 @@
 #define FUNCT5_AMOMINU (0b11000)
 #define FUNCT5_AMOMAXU (0b11100)
 
-bool dispatch(uint32_t instruction, CPUState& state);
+void dispatch(uint32_t instruction, CPUState& state);
 
 #endif
