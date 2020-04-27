@@ -1,29 +1,48 @@
-#include <iostream>
 #include <fstream>
+#include <getopt.h>
+#include <iostream>
 
 #include "cpustate.hpp"
 #include "dispatch.hpp"
 #include "elf.hpp"
 
 int main(int argc, char* argv[]) {
-    CPUState state;
+    int print_start_state = false;
+    int print_end_state = false;
+    int print_state = false;
 
-    if (argc != 2) {
-        std::cerr << "Usage: " << argv[0] << " executable\n";
+    struct option options[] = {
+        { "start-state", false, &print_start_state, true},
+        { "end-state", false, &print_end_state, true},
+        { "state", false, &print_state, true},
+        { NULL, false, NULL, false},
+    };
+
+    while (getopt_long_only(argc, argv, "", options, NULL) != -1);
+
+    char* exe = argv[optind];
+    if (!exe) {
+        std::cerr << "Usage: " << argv[0] << " [--start-state] [--end-state] [--state] executable\n";
         return 1;
     }
 
-    if (!load_elf(argv[1], state)) {
-        std::cerr << "Failed to load " << argv[1] << "\n";
+    CPUState state;
+    if (!load_elf(exe, state)) {
+        std::cerr << "Failed to load " << exe << "\n";
         exit(1);
     }
+    std::cerr << "Loaded " << exe << "\n";
 
-    std::cout << "Loaded " << argv[1] << "\n";
-
-    std::cout << "Start state:\n" << state << "\n";
+    if (print_start_state) {
+        std::cerr << "Start state:\n" << state << "\n";
+    }
 
     while (1) {
         try {
+            if (print_state) {
+                std::cerr << state << "\n";
+            }
+
             // fetch instruction
             uint32_t instruction = state.get_mem32(state.get_pc());
 
@@ -40,5 +59,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    std::cout << "End state:\n" << state << "\n";
+    if (print_end_state) {
+        std::cerr << "End state:\n" << state << "\n";
+    }
 }
